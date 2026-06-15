@@ -3,10 +3,137 @@
   padding: 20px;
 }
 
+.hero,
+.page-heading {
+  padding: 2rem;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #243b72, #522b68);
+  margin-bottom: 1.25rem;
+}
+
+.eyebrow {
+  color: #9cc8ff;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 1rem;
+}
+
+.team-card,
+.MatchDetailsCard,
+.MatchSmallCard,
+.status {
+  display: block;
+  padding: 1.2rem;
+  border-radius: 14px;
+  color: white;
+}
+
+.team-card {
+  background: #363b47;
+  border: 1px solid #4d5564;
+}
+
+.team-card:hover {
+  border-color: #9cc8ff;
+  transform: translateY(-2px);
+}
+
+.team-card p,
+.page-heading p,
+.hero p {
+  margin-top: 0.5rem;
+  color: #d8deea;
+}
+
+.back-link,
+.more-link a {
+  display: inline-block;
+  margin: 0 0 1rem;
+  color: #9cc8ff;
+}
+
+.team-name-section {
+  margin: 1rem 0;
+}
+
+.win-loss-section {
+  width: min(280px, 100%);
+  margin-bottom: 1.5rem;
+}
+
+.win-loss-section svg {
+  margin-top: 0.75rem;
+  max-height: 220px;
+}
+
+.MatchDetailsCard {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.MatchSmallCard {
+  margin-bottom: 0.75rem;
+}
+
+.MatchDetailsCard a,
+.MatchSmallCard a {
+  color: white;
+  text-decoration: underline;
+}
+
+.match-date,
+.match-venue,
+.match-result,
+.additional-detail p {
+  margin-top: 0.45rem;
+}
+
+.additional-detail {
+  border-left: 1px solid rgba(255, 255, 255, 0.35);
+  padding-left: 1rem;
+}
+
+.match-list {
+  display: grid;
+  gap: 0.75rem;
+}
+
+.status {
+  background: #363b47;
+}
+
+.status.error {
+  background: #7a3040;
+}
+
 .won-card{
   background-color: #4da375;
 }
 
 .lost-card{
   background-color : #a34d5d;
+}
+
+@media (max-width: 680px) {
+  .App {
+    padding: 12px;
+  }
+
+  .MatchDetailsCard {
+    grid-template-columns: 1fr;
+  }
+
+  .additional-detail {
+    border-left: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.35);
+    padding: 1rem 0 0;
+  }
 }

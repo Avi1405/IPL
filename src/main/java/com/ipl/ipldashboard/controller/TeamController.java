@@ -5,6 +5,8 @@ import com.ipl.ipldashboard.model.Team;
 import com.ipl.ipldashboard.respository.MatchRepository;
 import com.ipl.ipldashboard.respository.TeamRepository;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -29,6 +31,9 @@ public class TeamController {
     @GetMapping("/teams/{teamName}")
     public Team getTeam(@PathVariable String teamName){
         Team team = this.teamRepository.findByTeamName(teamName);
+        if (team == null) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Team not found");
+        }
         team.setMatches(this.matchRepository.findLatestMatchesByTeam(teamName,4));
         return team;
     }

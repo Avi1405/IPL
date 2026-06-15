@@ -1,7 +1,5 @@
 import {React} from'react';
 import {Link} from 'react-router-dom';
-import "./MatchDetailsCard.css";
-
 export const MatchDetailsCard = ({teamName,match}) => {
  if(!match) return null;
  

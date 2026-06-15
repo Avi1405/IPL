@@ -3,32 +3,38 @@ import {useParams,Link} from 'react-router-dom';
 import { MatchDetailsCard } from '../components/MatchDetailsCard';
 import { MatchSmallCard } from '../components/MatchSmallCard';
 import { PieChart } from 'react-minimal-pie-chart';
-
-import "./TeamPage.css";
+import { getJson } from '../api';
 
 export const TeamPage = () => {
 
     const [team,setTeam] = useState({matches:[]});
+    const [error,setError] = useState('');
     const {teamName} = useParams();
-    const endYear = process.env.REACT_APP_DATA_END_YEAR;
+    const endYear = process.env.REACT_APP_DATA_END_YEAR || 2020;
 
     useEffect(
         ()=>{
            const fetchTeam = async ()=>{
-                const response = await fetch(`http://localhost:8080/teams/${teamName}`);
-                const data = await response.json();
-                setTeam(data);
+                try {
+                    setTeam(await getJson(`/teams/${encodeURIComponent(teamName)}`));
+                } catch (requestError) {
+                    setError('Team data could not be loaded.');
+                }
             };
 
             fetchTeam(); 
         },[teamName]
     );
 
+  if(error)
+    return <p className="status error">{error}</p>;
+
   if(!team || !team.teamName)
-    return <h1>Team not found</h1>;
+    return <p className="status">Loading team...</p>;
 
   return (
-    <div className="TeamPage">
+    <main className="TeamPage">
+        <Link className="back-link" to="/">All teams</Link>
         <div className="team-name-section">
           <h1 className="team-name">{team.teamName}</h1>
         </div>
@@ -45,10 +51,10 @@ export const TeamPage = () => {
           <h3>Latest Matches</h3>
           <MatchDetailsCard teamName={team.teamName} match={team.matches[0]}/>
         </div>
-            {team.matches.slice(1).map(match => <MatchSmallCard teamName={team.teamName} match={match}/>)}
+            {team.matches.slice(1).map(match => <MatchSmallCard teamName={team.teamName} match={match} key={match.id}/>)}
         <div className="more-link">
-          <Link to={`/teams/${teamName}/matches/${endYear}`}>More ></Link>
+          <Link to={`/teams/${teamName}/matches/${endYear}`}>More &gt;</Link>
         </div>
-    </div>
+    </main>
   );
 }
